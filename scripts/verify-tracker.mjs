@@ -25,7 +25,7 @@ try {
   page.setDefaultTimeout(10000);
   page.setDefaultNavigationTimeout(10000);
   page.on('pageerror', error => console.log('Browser error:', error.message));
-  await page.goto('https://getmaxday.com/?utm_source=facebook&utm_campaign=rest_v1&fbclid=TEST_CLICK_ID#reflection');
+  await page.goto('https://getmaxday.com/rest/?fbclid=TEST_CLICK_ID#reflection');
   console.log('Production-origin page loaded.');
   await page.waitForFunction(() => typeof window.umami?.track === 'function');
   // Actual file downloads are covered by flow.spec.js. Keep this simulated
@@ -43,6 +43,10 @@ try {
   assert.equal(action.payload.hostname, 'getmaxday.com');
   assert.equal(action.payload.data.placement, 'hero');
   assert.match(action.payload.url, /utm_source=facebook/);
+  assert.equal(new URL(pageview.payload.url).pathname, '/');
+  assert.match(pageview.payload.url, /utm_campaign=rest_v1/);
+  assert.equal(new URL(action.payload.url).pathname, '/');
+  assert.equal(new URL(page.url()).pathname, '/rest/');
   assert(!action.payload.url.includes('fbclid'));
   assert(!action.payload.url.includes('#'));
   await page.locator('#hero-download').click();

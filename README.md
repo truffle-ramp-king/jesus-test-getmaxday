@@ -85,3 +85,9 @@ npm test
 ```
 
 Browser checks cover the actual card download, event deduplication, blocked analytics, no-JavaScript resources, narrow mobile layouts, passage access, metadata, and static navigation. Tests intercept analytics so test traffic is not written to the live Umami account. Install Playwright's Chromium with `npx playwright install chromium` if Chrome is not installed locally.
+
+### Short Facebook link
+
+Post **https://getmaxday.com/rest/** for the first Facebook post. It serves the same page directly, with no redirect or long tracking query in the address bar. The Umami hook attributes this reserved entry link to `facebook` / `organic_social` / `rest_v1` / `first_post`, and reports the page as `/` so the saved funnel still works. Explicit UTM parameters override defaults; use `?utm_content=second_post` for a separate post. This measures visits through the campaign link, including anyone who receives a copied link, rather than proving every visit came directly from Facebook.
+
+`npm run build` generates this static entry page from the homepage. Development, tests, and GitHub deployment run that step automatically.

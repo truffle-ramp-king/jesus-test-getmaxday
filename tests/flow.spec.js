@@ -99,3 +99,24 @@ test('all HTML declares noindex and static navigation/resources return successfu
   await page.getByRole('link', { name: 'Privacy', exact: true }).click();
   await expect(page).toHaveURL(/privacy\.html$/);
 });
+
+test('short Facebook entry keeps working assets and campaign attribution', async ({ page, context }) => {
+  await stubAnalytics(context);
+  await page.goto('/rest/');
+  await expect(page.locator('h1')).toContainText('peace');
+  expect(await page.locator('.landscape').evaluate(img => img.complete && img.naturalWidth > 0)).toBeTruthy();
+  const tracked = await page.evaluate(() => window.maxdayBeforeSend('event', { url: location.href }).url);
+  const url = new URL(tracked);
+  expect(url.pathname).toBe('/');
+  expect(url.searchParams.get('utm_source')).toBe('facebook');
+  expect(url.searchParams.get('utm_campaign')).toBe('rest_v1');
+  expect(page.url()).toBe('http://127.0.0.1:4173/rest/');
+  const downloadPromise = page.waitForEvent('download');
+  await page.locator('#hero-download').click();
+  expect((await downloadPromise).suggestedFilename()).toBe('MaxDay-Matthew-11-28.png');
+  await page.goto('/rest/?utm_source=qa&utm_campaign=launch_check&fbclid=test');
+  const qa = await page.evaluate(() => window.maxdayBeforeSend('event', { url: location.href }).url);
+  expect(qa).toContain('utm_source=qa');
+  expect(qa).toContain('utm_campaign=launch_check');
+  expect(qa).not.toContain('fbclid');
+});

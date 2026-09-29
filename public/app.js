@@ -10,6 +10,15 @@
   window.maxdayBeforeSend = (_type, payload) => {
     if (payload.url) {
       const url = new URL(payload.url, location.origin);
+      if (url.pathname === '/rest/' || url.pathname === '/rest/index.html') {
+        // This short link is reserved for the Facebook rest campaign. Keep
+        // explicit campaign tags (including QA) and the existing '/' funnel.
+        const defaults = { utm_source: 'facebook', utm_medium: 'organic_social', utm_campaign: 'rest_v1', utm_content: 'first_post' };
+        for (const [key, value] of Object.entries(defaults)) {
+          if (!url.searchParams.has(key)) url.searchParams.set(key, value);
+        }
+        url.pathname = '/';
+      }
       for (const key of [...url.searchParams.keys()]) {
         if (!campaignKeys.has(key)) url.searchParams.delete(key);
       }

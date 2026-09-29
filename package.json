@@ -5,6 +5,9 @@
   "type": "module",
   "description": "A static Scripture and prayer conversion experiment for getmaxday.com",
   "scripts": {
+    "build": "node scripts/build-pages.mjs",
+    "predev": "npm run build",
+    "pretest": "npm run build",
     "dev": "node scripts/serve.mjs",
     "test": "playwright test",
     "build:assets": "node scripts/build-assets.mjs"
