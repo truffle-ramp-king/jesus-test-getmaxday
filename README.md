@@ -27,13 +27,22 @@ The supplied Umami Cloud script and website ID are in `public/index.html`. Its `
 
 No event fires automatically as a conversion on arrival, scrolling, or elapsed time. Resource links work if JavaScript, session storage, or Umami is blocked. Analytics calls never block a download. No names, emails, prayer text, or belief responses are collected by this frontend. Pageviews and properties consume Umami's event allowance too.
 
-### Dashboard setup
+### Configured Umami dashboard
 
-1. Confirm the Umami website accepts the production hostname.
-2. Create an ordered funnel: viewed page `/` -> triggered event `card_requested`, maximum 30 minutes between steps.
-3. Use the same date range and source filters for both steps. Umami reports users in this funnel; do not call them sessions or derive conversion from raw clicks.
-4. View US-classified and all-country results separately. Use UTM reports for campaign attribution.
-5. Record Facebook impressions and website outbound clicks separately. The site cannot measure people who never leave Facebook. Missing organic outbound metrics must be reported as missing.
+Saved and verified in Umami on September 29, 2026:
+
+- Goal **Verse card requested**: triggered event `card_requested`.
+- Funnel **Rest v1: Landing to verse card**: viewed page `/` -> triggered event `card_requested`, in that order, maximum 30 minutes between steps.
+- Segment **Facebook Rest v1: All countries**: UTM Source matches `^facebook$` AND UTM Campaign matches `^rest_v1$`.
+- Segment **Facebook Rest v1: United States**: the same campaign filters AND Country is United States (`US`).
+
+The anchored regular expressions match the exact campaign values and allow configuration before the first Facebook visit. Both segments exclude the launch QA visits tagged `utm_source=qa&utm_campaign=launch_check`. QA data remains available when all filters are cleared.
+
+Open the [all-country campaign overview](https://cloud.umami.is/analytics/us/websites/9449f369-eb10-4dab-9299-b4e2d6920a91?segment=62985f83-e294-47e9-837e-e13f479dc3cf) or [US campaign overview](https://cloud.umami.is/analytics/us/websites/9449f369-eb10-4dab-9299-b4e2d6920a91?segment=b047f68e-e6ed-4f1d-8a3a-678a4ad1458d), then choose **Funnels**. These dashboard links require your Umami login. You can also switch views through **Filter -> Segments**; select one campaign segment at a time and click Apply.
+
+Use the same date range and source filters for both funnel steps. Umami reports visitors in this funnel; do not call them sessions or derive conversion from raw clicks. The primary conversion rate is card-requesting funnel visitors / landing-page funnel visitors. Read US and all-country results separately. Use the UTM view and `utm_content` for individual post attribution.
+
+Record Facebook impressions and website outbound clicks separately. The site cannot measure people who never leave Facebook. Missing organic outbound metrics must be reported as missing.
 
 Example Facebook link:
 
