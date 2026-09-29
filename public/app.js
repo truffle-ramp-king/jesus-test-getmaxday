@@ -13,7 +13,8 @@
       for (const key of [...url.searchParams.keys()]) {
         if (!campaignKeys.has(key)) url.searchParams.delete(key);
       }
-      payload.url = url.pathname + url.search;
+      url.hash = '';
+      payload.url = url.href;
     }
     return payload;
   };
