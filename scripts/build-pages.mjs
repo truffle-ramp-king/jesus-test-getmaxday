@@ -2,6 +2,7 @@ import { readFile, mkdir, writeFile } from 'node:fs/promises';
 // Generate the Facebook entry page from the homepage so the content stays in sync.
 const homepage = await readFile('public/index.html', 'utf8');
 const shortPage = homepage.replace(/(href|src)="([^"#:/][^"]*)"/g, (match, attribute, value) => {
+  if (/^[a-z][a-z0-9+.-]*:/i.test(value)) return match;
   if (value === './') return `${attribute}="/"`;
   return `${attribute}="/${value}"`;
 });
