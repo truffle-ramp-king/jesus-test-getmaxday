@@ -1,0 +1,15 @@
+{
+  "name": "jesus-test-getmaxday",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "A static Scripture and prayer conversion experiment for getmaxday.com",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "playwright test",
+    "build:assets": "node scripts/build-assets.mjs"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.63.0"
+  }
+}

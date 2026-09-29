@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+# HTML pages declare noindex, nofollow. Crawlers must be able to read them.
