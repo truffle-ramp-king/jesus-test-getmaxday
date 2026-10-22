@@ -65,10 +65,38 @@
     clearTimeout(toastTimer);
   });
 
+  const cards = window.maxdayPrayerCards || [];
+  let remaining = [];
+  let previousCard;
+  function nextCard() {
+    if (!remaining.length) {
+      remaining = [...cards];
+      for (let i = remaining.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [remaining[i], remaining[j]] = [remaining[j], remaining[i]];
+      }
+      if (remaining.length > 1 && remaining.at(-1).id === previousCard) {
+        [remaining[0], remaining[remaining.length - 1]] = [remaining.at(-1), remaining[0]];
+      }
+    }
+    const card = remaining.pop();
+    previousCard = card.id;
+    return card;
+  }
+
   document.querySelectorAll('.download-link').forEach(link => {
     link.addEventListener('click', () => {
       // Real static resource links work even when JavaScript or analytics fails.
       const print = link.dataset.placement === 'print';
+      let card;
+      if (!print && cards.length) {
+        card = nextCard();
+        link.href = '/assets/prayers/' + card.id + '.png';
+        link.download = 'MaxDay-Prayer-' + card.id + '.png';
+        document.querySelectorAll('[data-placement="print"]').forEach(printLink => {
+          printLink.href = '/assets/prayers/' + card.id + '.html';
+        });
+      }
       trackOnce(print ? 'print_requested' : 'card_requested', { placement: link.dataset.placement });
       announce(print
         ? 'Your printable page opens in a new tab. Choose Print on that page when you’re ready.'

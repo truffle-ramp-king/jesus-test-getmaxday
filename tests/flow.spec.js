@@ -20,7 +20,7 @@ test('a real card downloads; repeated requests do not inflate the conversion eve
   const first = page.waitForEvent('download');
   await page.locator('#hero-download').click();
   const download = await first;
-  expect(download.suggestedFilename()).toBe('MaxDay-Matthew-11-28.png');
+  expect(download.suggestedFilename()).toMatch(/^MaxDay-Prayer-(rest|guidance|strength|care)\.png$/);
   const bytes = await readFile(await download.path());
   expect(bytes.subarray(0, 8).toString('hex')).toBe('89504e470d0a1a0a');
   expect(bytes.readUInt32BE(16)).toBe(1080);
@@ -110,13 +110,32 @@ test('short Facebook entry keeps working assets and campaign attribution', async
   expect(url.pathname).toBe('/');
   expect(url.searchParams.get('utm_source')).toBe('facebook');
   expect(url.searchParams.get('utm_campaign')).toBe('rest_v1');
-  expect(page.url()).toBe('http://127.0.0.1:4173/rest/');
+  expect(new URL(page.url()).pathname).toBe('/rest/');
   const downloadPromise = page.waitForEvent('download');
   await page.locator('#hero-download').click();
-  expect((await downloadPromise).suggestedFilename()).toBe('MaxDay-Matthew-11-28.png');
+  expect((await downloadPromise).suggestedFilename()).toMatch(/^MaxDay-Prayer-(rest|guidance|strength|care)\.png$/);
   await page.goto('/rest/?utm_source=qa&utm_campaign=launch_check&fbclid=test');
   const qa = await page.evaluate(() => window.maxdayBeforeSend('event', { url: location.href }).url);
   expect(qa).toContain('utm_source=qa');
   expect(qa).toContain('utm_campaign=launch_check');
   expect(qa).not.toContain('fbclid');
+});
+
+ test('prayer cards cycle without repeats and print the last requested card', async ({ page, context, request }) => {
+  await stubAnalytics(context);
+  await page.goto('/rest/?utm_content=post02');
+  const names = [];
+  for (let i=0; i<5; i++) {
+    const pending = page.waitForEvent('download');
+    await page.locator('#hero-download').click();
+    const file = await pending;
+    expect(await file.failure()).toBeNull();
+    names.push(file.suggestedFilename());
+    const id = file.suggestedFilename().replace('MaxDay-Prayer-', '').replace('.png','');
+    await expect(page.locator('[data-placement="print"]')).toHaveAttribute('href', '/assets/prayers/'+id+'.html');
+    expect((await request.get('/assets/prayers/'+id+'.html')).status()).toBe(200);
+  }
+  expect(new Set(names.slice(0,4)).size).toBe(4);
+  expect(names[4]).not.toBe(names[3]);
+  expect((await page.evaluate(() => window.__analyticsCalls)).filter(c => c.name === 'card_requested')).toHaveLength(1);
 });

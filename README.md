@@ -91,3 +91,9 @@ Browser checks cover the actual card download, event deduplication, blocked anal
 Post **https://getmaxday.com/rest/** for the first Facebook post. It serves the same page directly, with no redirect or long tracking query in the address bar. The Umami hook attributes this reserved entry link to `facebook` / `organic_social` / `rest_v1` / `first_post`, and reports the page as `/` so the saved funnel still works. Explicit UTM parameters override defaults; use `?utm_content=second_post` for a separate post. This measures visits through the campaign link, including anyone who receives a copied link, rather than proving every visit came directly from Facebook.
 
 `npm run build` generates this static entry page from the homepage. Development, tests, and GitHub deployment run that step automatically.
+
+### Rotating prayer cards
+
+The download buttons randomly cycle through four locally hosted verse-and-prayer PNGs, without repeating until the set is exhausted (or repeating across the cycle boundary). Each page load starts a fresh cycle. The printable link follows the most recently requested card. Without JavaScript, the original Scripture card remains available. Conversion counting stays once per tab session.
+
+Regenerate the cards with `node scripts/build-prayer-cards.mjs` (local Chrome required). Scripture uses the public-domain World English Bible; Psalm 23:1, Psalm 46:1 and 1 Peter 5:7 were verified against bible-api.com on October 22, 2026. Prayers are original MaxDay text. No runtime API or server is required.

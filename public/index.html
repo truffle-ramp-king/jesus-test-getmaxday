@@ -17,6 +17,7 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="styles.css">
+  <script defer src="prayer-cards.js"></script>
   <script defer src="app.js"></script>
   <script defer src="https://cloud.umami.is/script.js" data-website-id="9449f369-eb10-4dab-9299-b4e2d6920a91" data-domains="getmaxday.com,www.getmaxday.com" data-exclude-hash="true" data-before-send="maxdayBeforeSend"></script>
 </head>
@@ -38,7 +39,7 @@
         <p class="hero-description">A Bible verse and prayer for today, with a free Scripture card to keep.</p>
       </div>
 
-      <figure class="verse-card" aria-label="Preview of your free Scripture card">
+      <figure class="verse-card" aria-label="Scripture for this reflection">
         <img class="landscape" src="assets/olive-hills.jpg" alt="" width="1536" height="1024" fetchpriority="high">
         <div class="verse-card-body">
           <p class="card-eyebrow">AN INVITATION TO REST</p>
@@ -51,9 +52,9 @@
       <div class="hero-offer">
         <a class="button download-link" id="hero-download" href="assets/matthew-11-28-card.png" download="MaxDay-Matthew-11-28.png" target="_blank" rel="noopener" data-placement="hero">
           <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Get the free verse card
+          Get a free prayer card
         </a>
-        <p class="offer-note">Yours to keep. No email or account needed.</p>
+        <p class="offer-note">A different prayer card with each click. No email or account needed.</p>
         <a class="quiet-link hero-read" href="#reflection">Take a moment to read <span aria-hidden="true">↓</span></a>
       </div>
     </section>
@@ -95,9 +96,9 @@
         <p>Save the card to your phone, print it for your desk, or send a little encouragement to someone you love.</p>
         <a class="button download-link" href="assets/matthew-11-28-card.png" download="MaxDay-Matthew-11-28.png" target="_blank" rel="noopener" data-placement="after_reflection">
           <svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 3v12m-4-4 4 4 4-4M5 15v5h14v-5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
-          Get the free verse card
+          Get a free prayer card
         </a>
-        <p class="file-note">Image card · Also available as a <a class="download-link text-download" href="assets/matthew-11-28-print.html" target="_blank" rel="noopener" data-placement="print">printable page</a></p>
+        <p class="file-note">Four verse &amp; prayer cards · Also available as a <a class="download-link text-download" href="assets/matthew-11-28-print.html" target="_blank" rel="noopener" data-placement="print">printable page</a></p>
         <button class="share-button" type="button" id="share-button" hidden><svg class="icon" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M12 16V3m-4 4 4-4 4 4M7 11H4v10h16V11h-3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg> Share this reflection</button>
       </div>
     </section>
@@ -109,7 +110,7 @@
     <p>Scripture: World English Bible. Reflection &amp; prayer: MaxDay.</p>
     <nav aria-label="Footer"><a href="about.html">About</a><a href="privacy.html">Privacy</a></nav>
   </footer>
-  <div class="mobile-bar" id="mobile-bar" hidden><span>A verse to keep</span><a class="button download-link" href="assets/matthew-11-28-card.png" download="MaxDay-Matthew-11-28.png" target="_blank" rel="noopener" data-placement="mobile_bar">Get the free card <span aria-hidden="true">↓</span></a></div>
+  <div class="mobile-bar" id="mobile-bar" hidden><span>A verse to keep</span><a class="button download-link" href="assets/matthew-11-28-card.png" download="MaxDay-Matthew-11-28.png" target="_blank" rel="noopener" data-placement="mobile_bar">Get a prayer card <span aria-hidden="true">↓</span></a></div>
   <div class="toast" id="toast" role="status" aria-live="polite" aria-atomic="true" hidden><p id="toast-message"></p><button type="button" id="toast-close" aria-label="Dismiss message">×</button></div>
 </body>
 </html>
