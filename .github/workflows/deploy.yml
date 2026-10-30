@@ -19,14 +19,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     steps:
       - uses: actions/checkout@v4
-      - name: Generate static entry pages
-        run: node scripts/build-pages.mjs
+      - name: Generate forwarding pages
+        run: node scripts/build-forwarding.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static website
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: forwarding-public
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v4
