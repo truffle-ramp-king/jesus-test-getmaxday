@@ -10,7 +10,7 @@ const logic = `(() => {
   const bibleCampaign = current.searchParams.get('utm_campaign') === 'rest_v1';
   const destination = new URL(biblePath || bibleCampaign ? 'https://bible.getmaxday.com/' : 'https://maxday.ai/');
   if (biblePath || bibleCampaign) {
-    destination.pathname = current.pathname === '/rest' ? '/rest/' : current.pathname;
+    destination.pathname = ['/rest', '/rest/', '/rest/index.html'].includes(current.pathname) ? '/' : current.pathname;
     destination.search = current.search;
     destination.hash = current.hash;
   }
@@ -23,7 +23,7 @@ function html(destination) {
 await writeFile(join(out,'index.html'), html('https://maxday.ai/'));
 await writeFile(join(out,'404.html'), html('https://maxday.ai/'));
 await mkdir(join(out,'rest'), {recursive:true});
-await writeFile(join(out,'rest/index.html'), html('https://bible.getmaxday.com/rest/'));
+await writeFile(join(out,'rest/index.html'), html('https://bible.getmaxday.com/'));
 for (const page of ['about.html','privacy.html']) await writeFile(join(out,page), html('https://bible.getmaxday.com/'+page));
 async function prints(dir) {
  for (const entry of await readdir(dir,{withFileTypes:true})) {
