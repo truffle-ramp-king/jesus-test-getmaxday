@@ -20,7 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - name: Generate forwarding pages
-        run: node scripts/build-forwarding.mjs
+        run: node scripts/build-transition.mjs
       - name: Configure Pages
         uses: actions/configure-pages@v5
       - name: Upload static website

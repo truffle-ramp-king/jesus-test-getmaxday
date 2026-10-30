@@ -1,3 +1,7 @@
+## Rollout status
+
+Temporary deployment uses `build-transition.mjs`: root -> maxday.ai, existing `/rest/` Bible page retained. The new subdomain is deployed but awaiting GitHub certificate issuance. Once `bible.getmaxday.com` passes TLS verification, enable HTTPS in its Pages settings and change the deploy workflow to `node scripts/build-forwarding.mjs`. That final build migrates legacy links to the new domain.
+
 # getmaxday.com forwarding
 
 This deployment now forwards the main domain to https://maxday.ai/. The Bible site lives at https://bible.getmaxday.com/ and is maintained in https://github.com/truffle-ramp-king/bible-getmaxday (local ../bible-website).
