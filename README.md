@@ -1,6 +1,6 @@
-## Rollout status
+## Migration completed
 
-Temporary deployment uses `build-transition.mjs`: root -> maxday.ai, existing `/rest/` Bible page retained. The new subdomain is deployed but awaiting GitHub certificate issuance. Once `bible.getmaxday.com` passes TLS verification, enable HTTPS in its Pages settings and change the deploy workflow to `node scripts/build-forwarding.mjs`. That final build migrates legacy links to the new domain.
+Bible HTTPS certificate verified and HTTPS enforced. Deployment uses build-forwarding.mjs. Umami is configured as MaxDay Bible at bible.getmaxday.com with its original website ID and historical data. Automatic checks remain paused.
 
 # getmaxday.com forwarding
 
@@ -10,4 +10,4 @@ GitHub Pages serves browser-side redirects with JavaScript and no-JavaScript met
 
 Build with `node scripts/build-forwarding.mjs`. Deployment uploads only forwarding-public. The original public/ source is retained for rollback; do not edit it to update the Bible site. Roll back the forwarding deployment by restoring the previous workflow (af0f140) and redeploying.
 
-Latest routing requirement: the final Bible destination is always the homepage for /rest legacy entries, with explicit UTM tags preserved. There are no implicit Facebook attribution defaults. The temporary old-domain fallback retains /rest only until the new HTTPS certificate is valid.
+Latest routing requirement: the final Bible destination is always the homepage for /rest legacy entries, with explicit UTM tags preserved. There are no implicit Facebook attribution defaults. The HTTPS cutover is complete; /rest is a redirect, not a second landing page.
